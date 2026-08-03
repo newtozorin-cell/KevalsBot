@@ -1,0 +1,22 @@
+services:
+  - type: web
+    name: sensex-supertrend-bot
+    runtime: python
+    plan: starter
+    buildCommand: "pip install --upgrade pip && pip install -r requirements.txt"
+    startCommand: "gunicorn --workers 1 --threads 4 --timeout 120 app:app"
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.9
+      - key: FLASK_SECRET
+        generateValue: true
+      - key: PAPER_TRADE
+        value: "true"
+      - key: UPSTOX_CLIENT_ID
+        sync: false        # set in Render dashboard
+      - key: UPSTOX_CLIENT_SECRET
+        sync: false        # set in Render dashboard
+      - key: UPSTOX_REDIRECT_URI
+        value: https://sensex-supertrend-bot.onrender.com/callback
+      - key: PORT
+        value: 5000
